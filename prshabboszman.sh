@@ -30,6 +30,7 @@ while getopts ":lch" opt; do							# Get options
 		;;
 	\?)									# If invalid option is used
 		echo "Invalid option: -$OPTARG" >&2				# Print error message to terminal
+  		echo "To see valid options use -h flag"
 		exit 1								# And exit with error
 	esac
 done
@@ -80,5 +81,5 @@ fi
 if  [ $SUPRESS_LP == false ]; then
 	lp /tmp/psz.tmp								# Prints file /tmp/hebcal.tmp to line printer unless supressed
 fi
-rm /tmp/psz.tmp								# Removes file /tmp/hebcal.tmp
+rm /tmp/psz.tmp									# Removes file /tmp/hebcal.tmp
 exit 0										# Exit with success code
