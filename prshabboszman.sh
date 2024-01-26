@@ -4,7 +4,7 @@
 # Uses hebcal and GNU date
 # prshabboszman.sh is a UNIX shell script for printing shabbos zmanim
 # It uses hebcal to determine zmanim and GNU date to get the date input into hebcal
-# Now depends on my form of hebcal
+# Certain partsdepends on my form of hebcal
 # This applies edits to the list of zmanim
 # Unsure if this will work with original hebcal and related modules
 # My fork can be found at github.com/MaxBGreenberg/hebcal
@@ -79,9 +79,9 @@ hebcal -S $FRI >> /tmp/psz.tmp							# Prints hebrew date of Erev Shabbos, parsh
 hebcal -ZC "${CITY}" $FRI | grep Plag >> /tmp/psz.tmp				# Print zman plag hamincha for Erev Shabbos to the same file
 hebcal -C "${CITY}" $FRI | grep Candle >> /tmp/psz.tmp				# Prints candle lighting time for this Shabbos to the same file
 hebcal -ZC "${CITY}" $FRI | grep Sunset >> /tmp/psz.tmp				# Prints sunset time for Erev Shabbos to same file
-hebcal -ZC "${CITY}" $FRI | grep HaShemashot >> /tmp/psz.tmp			# Prints bein hashmashos time
+hebcal -ZC "${CITY}" $FRI | grep HaShemashot >> /tmp/psz.tmp			# Prints bein hashmashos time. Requires my fork of hebcal
 hebcal -ZC "${CITY}" $FRI | grep Tzeit >> /tmp/psz.tmp				# Prints tzies hakochavim time
-hebcal -ZC "${CITY}" $FRI | grep Halayla >> /tmp/psz.tmp			# Prints chatzos haylayla time
+hebcal -ZC "${CITY}" $FRI | grep Halayla >> /tmp/psz.tmp			# Prints chatzos haylayla time. Requires my fork of hebcal
 hebcal -ZC "${CITY}" $SAT | grep -v Halayla >> /tmp/psz.tmp			# Prints zmanim for Shabbos day and havdala time to same file
 if [ $SUPRESS_CAT == false ]; then
 	cat /tmp/psz.tmp							# Prints file /tmp/hebcal.tmp to terminal unless supressed
