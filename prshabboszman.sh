@@ -76,9 +76,7 @@ fi
 
 echo "Shabbos zmanim for "$CITY > /tmp/psz.tmp					# Prints city you're printing zmanim for
 hebcal -S $FRI >> /tmp/psz.tmp							# Prints hebrew date of Erev Shabbos, parshas hashavua to file ~/hebcal.tmp
-hebcal -ZC "${CITY}" $FRI | grep Plag >> /tmp/psz.tmp				# Print zman plag hamincha for Erev Shabbos to the same file
-hebcal -C "${CITY}" $FRI | grep Candle >> /tmp/psz.tmp				# Prints candle lighting time for this Shabbos to the same file
-hebcal -ZC "${CITY}" $FRI | grep -A 3 Sunset >> /tmp/psz.tmp			# Prints sunset time, bein hashmashos, tzeis hakochavim, and chatzos halayla for Leil Shabbos to same file
+hebcal -ZC "${CITY}" $FRI | grep -A 5 Plag >> /tmp/psz.tmp			# Print zman plag hamincha, candle lighting, sunset, bein hashmashos, tzies, and chatzos for Erev and Leil Shabbos to the same file
 hebcal -ZC "${CITY}" $SAT | grep -v Halayla >> /tmp/psz.tmp			# Prints zmanim for Shabbos day and havdala time to same file
 if [ $SUPRESS_CAT == false ]; then
 	cat /tmp/psz.tmp							# Prints file /tmp/hebcal.tmp to terminal unless supressed
