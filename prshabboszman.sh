@@ -4,6 +4,11 @@
 # Uses hebcal and GNU date
 # prshabboszman.sh is a UNIX shell script for printing shabbos zmanim
 # It uses hebcal to determine zmanim and GNU date to get the date input into hebcal
+# Certain partsdepends on my form of hebcal
+# This applies edits to the list of zmanim
+# Unsure if this will work with original hebcal and related modules
+# My fork can be found at github.com/MaxBGreenberg/hebcal
+# Uses modules from github.com/MaxBGreenberg/hebcal-go
 # This came from a need to quickly print zmanim for Shabbos on Friday afternoon
 # It will print select zmanim for the coming friday, all zmanimi for the comming saturday
 # The Hebrew dates of both days and the week's parsha
@@ -30,6 +35,7 @@ while getopts ":lch" opt; do							# Get options
 		;;
 	\?)									# If invalid option is used
 		echo "Invalid option: -$OPTARG" >&2				# Print error message to terminal
+  		echo "To see valid options use -h flag"
 		exit 1								# And exit with error
 	esac
 done
@@ -68,17 +74,17 @@ else										# If today is not Saturday
 	SAT=$(date -dSaturday '+%m %d %Y')					# Set variable SAT to the date of Saturday this week in format taken by hebcal
 fi
 
-echo "Shabbos zmanim for "$CITY > /tmp/hebcal.tmp				# Prints city you're printing zmanim for
-hebcal -SC "${CITY}" $FRI | grep -v Candle >> /tmp/hebcal.tmp			# Prints hebrew date of Erev Shabbos, parshas hashavua to file ~/hebcal.tmp
-hebcal -ZC "${CITY}" $FRI | grep Plag >> /tmp/hebcal.tmp			# Print zman plag hamincha for Erev Shabbos to the same file
-hebcal -ZcC "${CITY}" $FRI | grep Candle >> /tmp/hebcal.tmp			# Prints candle lighting time for this Shabbos to the same file
-hebcal -ZC "${CITY}" $FRI | grep Sunset >> /tmp/hebcal.tmp			# Prints sunset time for Erev Shabbos to same file
-hebcal -ZcC "${CITY}" $SAT >> /tmp/hebcal.tmp					# Prints zmanim for Shabbos day and havdala time to same file
+echo "Shabbos zmanim for "$CITY > /tmp/psz.tmp					# Prints city you're printing zmanim for
+hebcal -S $FRI >> /tmp/psz.tmp							# Prints hebrew date of Erev Shabbos, parshas hashavua to file ~/hebcal.tmp
+hebcal -ZC "${CITY}" $FRI | grep Plag >> /tmp/psz.tmp				# Print zman plag hamincha for Erev Shabbos to the same file
+hebcal -C "${CITY}" $FRI | grep Candle >> /tmp/psz.tmp				# Prints candle lighting time for this Shabbos to the same file
+hebcal -ZC "${CITY}" $FRI | grep -A 2 Sunset >> /tmp/psz.tmp			# Prints sunset time, bein hashmashos, tzeis hakochavim, and chatzos halayla for Leil Shabbos to same file
+hebcal -ZC "${CITY}" $SAT >> /tmp/psz.tmp					# Prints zmanim for Shabbos day and havdala time to same file
 if [ $SUPRESS_CAT == false ]; then
-	cat /tmp/hebcal.tmp							# Prints file /tmp/hebcal.tmp to terminal unless supressed
+	cat /tmp/psz.tmp							# Prints file /tmp/hebcal.tmp to terminal unless supressed
 fi
 if  [ $SUPRESS_LP == false ]; then
-	lp /tmp/hebcal.tmp							# Prints file /tmp/hebcal.tmp to line printer unless supressed
+	lp /tmp/psz.tmp								# Prints file /tmp/hebcal.tmp to line printer unless supressed
 fi
-rm /tmp/hebcal.tmp								# Removes file /tmp/hebcal.tmp
+rm /tmp/psz.tmp									# Removes file /tmp/hebcal.tmp
 exit 0										# Exit with success code
