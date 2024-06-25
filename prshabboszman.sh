@@ -73,7 +73,7 @@ hebcal -SC "${CITY}" $FRI | grep -v Candle >> /tmp/hebcal.tmp			# Prints hebrew 
 hebcal -ZC "${CITY}" $FRI | grep Plag >> /tmp/hebcal.tmp			# Print zman plag hamincha for Erev Shabbos to the same file
 hebcal -ZcC "${CITY}" $FRI | grep Candle >> /tmp/hebcal.tmp			# Prints candle lighting time for this Shabbos to the same file
 hebcal -ZC "${CITY}" $FRI | grep Sunset >> /tmp/hebcal.tmp			# Prints sunset time for Erev Shabbos to same file
-hebcal --mevarchim -ZcC "${CITY}" $SAT >> /tmp/hebcal.tmp			# Prints zmanim for Shabbos day and havdala time to same file
+hebcal -ZcC "${CITY}" $SAT >> /tmp/hebcal.tmp					# Prints zmanim for Shabbos day and havdala time to same file
 if [ $SUPRESS_CAT == false ]; then
 	cat /tmp/hebcal.tmp							# Prints file /tmp/hebcal.tmp to terminal unless supressed
 fi
